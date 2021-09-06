@@ -23,9 +23,8 @@ This app url handles all the CRUD operation
    
 2. url_api.py
   This url handles all the login and registration process
-  
-   path('login/',view_api.login_api.as_view(),name='login-page'),
-   path('register/',view_api.register_api.as_view())
+     path('login/',view_api.login_api.as_view(),name='login-page'),
+     path('register/',view_api.register_api.as_view())
     
 
 JWT Authentication
