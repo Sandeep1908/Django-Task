@@ -1,0 +1,129 @@
+{% extends 'app/base.html' %}
+{% block title %}
+Sign Up 
+{% endblock %}
+{% block btn %}
+<li class="nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block">
+  <a class="btn btn-primary" href="{% url 'home' %}">Home</a></li>
+{% endblock btn %}
+{% block content %}
+    <input type="hidden" value="{{csrf_token}}" id="csrf">
+    <div class="container-fluid px-3">
+      <div class="row min-vh-100">
+        <div class="col-md-8 col-lg-6 col-xl-5 d-flex align-items-center">
+          <div class="w-100 py-5 px-md-5 px-xl-6 position-relative">
+           
+            <form class="form-validate">
+              <p id="error"></p>
+              <div class="form-group">
+                <label class="form-label" for="Username"> Username</label>
+                <input class="form-control" name="Username" id="Username" type="email" placeholder="Username" autocomplete="off" required data-msg="Please enter your email">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="loginUsername"> Email Address</label>
+                <input class="form-control" name="email" id="email" type="email" placeholder="name@address.com" autocomplete="off" required data-msg="Please enter your email">
+              </div>
+              <div class="form-group mb-4">
+                <div class="row">
+                  <div class="col">
+                    <label class="form-label" for="loginPassword"> Password</label>
+                  </div>
+                </div>
+                <input class="form-control" name="password" id="password" placeholder="Password" type="password" required data-msg="Please enter your password">
+              </div>
+              
+              <div class="form-group mb-4">
+                <div class="row">
+                  <div class="col">
+                    <label class="form-label" for="loginPassword"> Confirm Password</label>
+                  </div>
+                </div>
+                <input class="form-control" name="password" id="password2" placeholder="Confirm Password" type="password" required data-msg="Please enter your password again">
+              </div>
+
+              <div class="form-group mb-4">
+                <div class="row">
+                  <div class="col">
+                    <label class="form-label" for="loginPassword"> Address</label>
+                  </div>
+                </div>
+                <input class="form-control" name="password" id="Address" placeholder="Address" type="text" required data-msg="Please enter your Address">
+              </div>
+              
+              <!-- Submit-->
+              <button id="btn" class="btn btn-lg btn-block btn-primary">Sign Up</button>
+             
+              <p class="text-center"><small class="text-muted text-center">Already have an accoutn? <a href="{% url 'login' %}">Login In </a></small></p>
+            </form><a class="close-absolute mr-md-5 mr-xl-6 pt-5" href="index-2.html"> 
+              <svg class="svg-icon w-3rem h-3rem">
+                <use xlink:href="#close-1"> </use>
+              </svg></a>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-6 col-xl-7 d-none d-md-block">
+          <!-- Image-->
+          <div class="bg-cover h-100 " style="background-image: url(https://signup.studyportal.io/dist/assets/img/recruiter-signup-min.png);"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+      let btn=document.getElementById('btn');
+      let error=document.getElementById('error')
+      btn.addEventListener('click',(e)=>{
+        e.preventDefault();
+        
+        let username =document.getElementById('Username').value;
+        let email=document.getElementById('email').value;
+        let password=document.getElementById('password').value;
+        let password2=document.getElementById('password2').value;
+        let Address=document.getElementById('Address').value;
+        let csrf=document.getElementById('csrf').value;
+        
+        if(!username.length || !email.length || !password.length || !password2.length || !Address.length){
+          error.innerHTML=`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>Success: </strong> Plese Input Credentials!
+               </div>`
+               return;
+        }
+
+       
+        data={
+          'username':username,
+          'email':email,
+          'password':password,
+          'password2':password2,
+          'address':Address
+        }
+
+        fetch('/api/register/',{
+          method:'POST',
+          headers:{
+            'content-type':'application/json',
+            'X-csrfToken':csrf
+          },
+          body:JSON.stringify(data)
+        }).then(res=>res.json()).then((result)=>{
+          if(result.status==200)
+          {
+            error.innerHTML=`<div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>Success: </strong> ${result.message}
+               </div>`
+               window.location.href='/login_view'
+            
+          }
+          else
+          {
+            error.innerHTML=`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>Error: </strong> ${result.message}
+               </div>`
+          }
+          console.log(result)
+        })
+
+        
+      })
+    </script>
+  {% endblock content %}
