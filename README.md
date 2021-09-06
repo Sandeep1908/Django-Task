@@ -12,7 +12,9 @@ In Main Project Urls to handle main routes
     
     
 In App urls there is two section. This app url handles all the CRUD operation 
+
         1 url.py
+        
             path('',views.home,name='home'),
             path('login/',views.login_view,name='login'),
             path('signup/',views.register_view,name='signup'),
@@ -20,11 +22,11 @@ In App urls there is two section. This app url handles all the CRUD operation
             path('logout/',views.logout_view,name='logout'),
             path('delete/<int:id>/',views.delete_view,name='delete')
    
-2. url_api.py
-  This url handles all the login and registration process
-     path('login/',view_api.login_api.as_view(),name='login-page'),
-     path('register/',view_api.register_api.as_view())
-    
+           2. url_api.py
+              This url handles all the login and registration process
+                 path('login/',view_api.login_api.as_view(),name='login-page'),
+                 path('register/',view_api.register_api.as_view())
+
 
 JWT Authentication
 In JwtAuthentication folder there is url.py file
