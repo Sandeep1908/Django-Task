@@ -11,15 +11,14 @@ In Main Project Urls to handle main routes
     path('Rest/',include('app.JwtAuthentication.urls'))
     
     
-In App urls there is two section
-This app url handles all the CRUD operation 
-1 url.py
-    path('',views.home,name='home'),
-    path('login/',views.login_view,name='login'),
-    path('signup/',views.register_view,name='signup'),
-    path('edit/<int:id>/',views.edit,name='edit'),
-    path('logout/',views.logout_view,name='logout'),
-    path('delete/<int:id>/',views.delete_view,name='delete')
+In App urls there is two section. This app url handles all the CRUD operation 
+        1 url.py
+            path('',views.home,name='home'),
+            path('login/',views.login_view,name='login'),
+            path('signup/',views.register_view,name='signup'),
+            path('edit/<int:id>/',views.edit,name='edit'),
+            path('logout/',views.logout_view,name='logout'),
+            path('delete/<int:id>/',views.delete_view,name='delete')
    
 2. url_api.py
   This url handles all the login and registration process
