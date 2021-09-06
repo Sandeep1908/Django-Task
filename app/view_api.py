@@ -1,9 +1,8 @@
 from django.http.response import JsonResponse
 from rest_framework.views import APIView
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
-from .models import userdata
-from rest_framework_simplejwt.tokens import RefreshToken
+from .models import userdata1
+
 
 
 
@@ -14,7 +13,7 @@ class login_api(APIView):
         response['message']='something went wrong'
         try:
             
-            check_user=User.objects.filter(email=request.data.get('email')).first()
+            check_user=userdata1.objects.filter(email=request.data.get('email')).first()
            
             if check_user is None:
                 response['message']='User not found'
@@ -41,22 +40,20 @@ class register_api(APIView):
         try:
             data=request.data
             if(data.get('password')==data.get('password2')):
-                if User.objects.filter(username=data.get('username')).exists():
+                if userdata1.objects.filter(username=data.get('username')).exists():
                     response['message']='Username already exits'
                     return JsonResponse(response)
                 
-                if User.objects.filter(email=data.get('email')).exists():
+                if userdata1.objects.filter(email=data.get('email')).exists():
                     response['message']='Eamil already exits'
                     return JsonResponse(response)
                 
-                user=User.objects.create(username=data.get('username'),email=data.get('email'))
+                user=userdata1.objects.create(username=data.get('username'),email=data.get('email'),Address=data.get('address'))
                 user.set_password(data.get('password'))  
                 user.save()
-                token=RefreshToken()
                 
-                data= userdata.objects.create(user=user,Address=data.get('address'),token=str(token))
-                data.save()
-
+                
+                
                 response['message']='Registration done'         
                 response['status']=200
             else:
